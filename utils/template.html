@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
     <meta content="width=device-width,initial-scale=1.0" name="viewport">
@@ -28,42 +28,28 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.16.0/bootstrap-vue.min.js"></script>
 
     <!-- JQuery-->
-    <!--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         var isLocalExample;
         var report_generated_time;
         var version;
-        // var report_data;
+        var report_data;
 
         isLocalExample = false;
-        report_generated_time = "2020-10-10";
-        version = "0.0.1";
+        report_generated_time = "{{ t.report_generated_time }}";
+        version = "{{ t.version }}";
 
         // The report_data goes right here.
-        var report_data = [{"first_name": "Joe", "last_name": "Biden", "city": "DC"}, {"first_name": "Kamala", "last_name": "Harris", "city": "DC"}, {"first_name": "Nancy", "last_name": "Pelosi", "city": "DC"}]
+        {{ t.results }}
 
     </script>
-<!--    <script>-->
-<!--        var isLocalExample;-->
-<!--        var report_generated_time;-->
-<!--        var version;-->
-<!--        var report_data;-->
-
-<!--        isLocalExample = false;-->
-<!--        report_generated_time = "{{ t.report_generated_time }}";-->
-<!--        version = "{{ t.version }}";-->
-
-<!--        // The report_data goes right here.-->
-<!--        {{ t.results }}-->
-
-<!--    </script>-->
 </head>
 <body>
 <div id="app">
     <!--Navigation bar-->
     <b-navbar toggleable="md" variant="faded">
         <b-navbar-brand @click="activeSection = 0" href="#">
-            vue_boilerplate
+            AWS AllowLister
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -138,12 +124,6 @@
 </div>
 
 <script type="text/javascript">
-    // const sampleData = require('./sampleData');
-    // const report_data = sampleData.sample_data;
-    // eslint-disable-next-line no-unused-vars,no-undef
-    // const report_generated_time = "2020-09-01";
-    // eslint-disable-next-line no-unused-vars,no-undef
-    // const version = "0.0.1";
 
     var app = new Vue({
       name: "App",
@@ -153,12 +133,21 @@
                 sortDesc: false,
                 totalRows: 1,
                 currentPage: 1,
-                perPage: 20,
-                pageOptions: [5, 10, 15, 20, 50, 100],
+                perPage: 300,
+                pageOptions: [100, 200, 300],
                 fields: [
-                    {key: 'first_name', sortable: true},
-                    {key: 'last_name', sortable: true},
-                    {key: 'city', sortable: true},
+                    {key: 'service_prefix', sortable: true},
+                    {key: 'name', sortable: true},
+                    {key: 'SOC', sortable: true},
+                    {key: 'ISO', sortable: true},
+                    {key: 'PCI', sortable: true},
+                    {key: 'HIPAA', sortable: true},
+                    {key: 'FedRAMP_Moderate', sortable: true},
+                    {key: 'FedRAMP_High', sortable: true},
+                    {key: 'DoDCCSRG_IL2_GC', sortable: true},
+                    {key: 'DoDCCSRG_IL2_EW', sortable: true},
+                    {key: 'DoDCCSRG_IL4_GC', sortable: true},
+                    {key: 'DoDCCSRG_IL5_GC', sortable: true},
                     // TODO: This is where you insert new fields
                 ],
                 activeSection: 0,
@@ -168,7 +157,6 @@
                 report_generated_time: report_generated_time,
                 // eslint-disable-next-line no-undef
                 version: version,
-                more_metadata: "123456789012"
             }
       },
     })

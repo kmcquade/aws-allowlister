@@ -45,6 +45,32 @@ class ComplianceData:
             results.append(row.__dict__)
         return results
 
+    @staticmethod
+    def get_rows_with_emoji(db_session, service_prefix=None, service_name=None):
+        """Get rows as a list of dictionaries"""
+        if service_prefix:
+            rows = db_session.query(ComplianceTable).filter(
+                ComplianceTable.service_prefix == service_prefix
+            )
+        elif service_name:
+            rows = db_session.query(ComplianceTable).filter(
+                ComplianceTable.name == service_name
+            )
+        else:
+            rows = db_session.query(ComplianceTable)
+        size = len(rows.all())
+        results = []
+        for row in rows:
+            res = row.__dict__
+            res.pop("_sa_instance_state", None)
+            res.pop("id", None)
+            for key, val in res.items():
+                if val == "true":
+                    # res[key] = "✅"
+                    res[key] = "Yes"
+            results.append(row.__dict__)
+        return results
+
     def update_compliance_status(
         self, db_session, service_prefix, compliance_standard, status
     ):
